@@ -15,52 +15,37 @@ class Home extends Component {
         })
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.getCurrentWeatherData()
     }
 
     render() {
-        const { weatherData } = this.state ? this.state : '';
-        let weatherIcon,
-            weatherInfo,
-            weatherDetails,
-            weatherTable;
+        const { weatherData } = this.state || false; // false dlatego, że bez || wywalało błąd (nie można znaleść weratherData w nullu) czyli ten błąd byłby też jakbym po || przypisywał nulla
 
-        if (weatherData) {
-            const iconID = weatherData.weather[0].icon;
-            const temperature = weatherData.main.temp;
-            const weatherName = weatherData.weather[0].main;
-
-            weatherIcon = (
-                <div className="weather-image">
-                    <img src={getIcon(iconID)} alt={weatherName} />
-                </div>
-            )
-            weatherInfo = (
-                <div className="weather-info">
-                    {temperature}&deg;C
-                </div>
-            )
-            weatherDetails = (
-                <div className="weather-details">
-                    {weatherName}                
-                </div>
-            )
-            weatherTable = (
-                <div className="weather-table">
-                    <li><span>Description</span><span>{weatherData.weather[0].description}</span></li>
-                    <li><span>Humidity</span><span>{weatherData.main.humidity}%</span></li>
-                    <li><span>Pressure</span><span>{weatherData.main.pressure} hPa</span></li>
-                </div>
-            )
+        if(!weatherData) {
+            return null;
         }
+        const { icon: iconID, main: weatherName, description: weatherDescription } = weatherData.weather[0];
+        const { temp: temperature, humidity, pressure} = weatherData.main;
+        const { speed: windSpeed, deg: windDirection } = weatherData.wind;
 
         return (
             <div className="Home">
-                {weatherIcon}
-                {weatherInfo}
-                {weatherDetails}
-                {weatherTable}          
+                 <div className="weather-image">
+                    <img src={getIcon(iconID)} alt={weatherName} />
+                </div>
+                <div className="weather-info">
+                    {temperature}&deg;C
+                </div>
+                <div className="weather-details">
+                    {weatherName}
+                </div>
+                <div className="weather-table">
+                    <li><span>Description</span><span>{weatherDescription}</span></li>
+                    <li><span>Humidity</span><span>{humidity}%</span></li>
+                    <li><span>Pressure</span><span>{pressure} hPa</span></li>
+                    <li><span>Wind</span><span><i style={{transform: `rotate(${windDirection}deg)`}}>🡑</i> {windSpeed} km/h</span></li>
+                </div>
             </div>
         );
     }

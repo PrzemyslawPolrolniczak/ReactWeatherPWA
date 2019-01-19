@@ -31,7 +31,7 @@
   border: 2px solid #ccc;
   border-radius: 30px;
   overflow: hidden;
-  margin-top: 50px;
+  margin-top: 25px;
 }
 
 .weather-table li {
@@ -40,6 +40,11 @@
   display: flex;
   justify-content: space-between;
   color: white;
+}
+
+.weather-table i {
+  position: relative;
+  display: inline-block;
 }
 
 .weather-table li:nth-of-type(odd) {
