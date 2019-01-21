@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Home from './views/Home';
+import FiveDayForecast from './views/FiveDayForecast';
 import './App.css';
 
 class App extends Component {
@@ -7,7 +8,8 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <Home />
+          {/* <Home /> */}
+          <FiveDayForecast />
         </header>
       </div>
     );
